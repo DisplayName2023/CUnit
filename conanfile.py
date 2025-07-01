@@ -1,7 +1,6 @@
 from conan import ConanFile, tools
-from conan.tools.cmake import CMake, CMakeToolchain, CMakeDeps
+from conan.tools.cmake import CMake, CMakeToolchain, CMakeDeps, cmake_layout
 from conan.tools.files import get, copy, rmdir, collect_libs
-from conan.tools.layout import cmake_layout
 import os
 
 class CUnitConan(ConanFile):
@@ -47,7 +46,7 @@ class CUnitConan(ConanFile):
         tc.variables["BUILD_SHARED_LIBS"] = self.options.shared
         tc.variables["BUILD_TESTING"] = self.options.build_testing
 
-        if self.settings.compiler == "Visual Studio":
+        if self.settings.compiler == "msvc":
             if self.settings.build_type == "Release" and "MD" == str(self.settings.compiler.runtime):
                 print("compiler.runtime is MD")
                 tc.preprocessor_definitions.debug["CMAKE_MSVC_RUNTIME_LIBRARY"] = "MultiThreadedDLL"
